@@ -1,0 +1,48 @@
+info:
+  name: id-dev
+
+# 此处配置level会覆盖logback.xml的root level, 影响：开发时：IDE控制台 部署时：spring.log文件
+logging:
+  level:
+    root: ERROR
+    com.mootal: INFO
+    com.mootal.id.service: DEBUG
+
+spring:
+  security:
+    user:
+      name: "user"
+      password: "password"
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
+    # eureka client发送心跳给server端的频率，默认为30秒
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 10
+  client:
+    service-url:
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@peer1:8761/eureka/,http://${spring.security.user.name}:${spring.security.user.password}@peer2:8762/eureka/
+
+dubbo:
+  application:
+    id: id:8013
+    name: id
+    qos-port: '22213' # 22222
+    version: 1.0.0
+  registry:
+    protocol: zookeeper
+    address: localhost:2181,localhost:2182,localhost:2183
+  protocol:
+    id: dubbo
+    status: server
+    name: dubbo
+    port: '20813' # 20880
+    threadpool: cached
+  provider:
+    filter: dubboContextFilter
+    timeout: '10000'
+  consumer:
+    check: false
+    timeout: '10000' # dubbo默认以consumer中配置的时间为准

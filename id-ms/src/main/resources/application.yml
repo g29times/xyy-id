@@ -1,0 +1,52 @@
+server:
+  port: 8013
+#  servlet:
+#    context-path: /id
+
+logging:
+  config: classpath:logback.xml
+#  file: swift-id
+  path: /opt/file/logs/id
+
+spring:
+  application:
+    name: id
+  profiles:
+    active: dev # @active-profile@值来自maven的pom文件
+  # 热部署 排除静态资源文件
+  devtools:
+    restart:
+      exclude: public/**,resources/**,static/**,templates/**
+  #  undertow:
+  #    io-threads: 8
+  #    worker-threads: 512
+  #    buffer-size: 1024
+  #    direct-buffers: true
+
+  #ribbon:
+  #  ConnectTimeout: 2000
+  #  ReadTimeout: 3000
+  #  MaxAutoRetries: 0
+  #  MaxAutoRetriesNextServer: 1
+  #  eager-load:
+  #    enabled: true
+  #    clients: mc-fenji-auth,mc-fenji-class-task,mc-fenji-common,mc-fenji-user-info
+  #
+  #hystrix:
+  #  threadpool:
+  #    default:
+  #      coreSize: 512
+  #      maxQueueSize: 1024
+  #      queueSizeRejectionThreshold: 1024
+  #  command:
+  #    default:
+  #      execution:
+  #        isolation:
+  #          thread:
+  #            timeoutInMilliseconds: 60000
+  #      circuitBreaker:
+  #          enabled: false
+  #      fallback:
+  #        isolation:
+  #          semaphore:
+  #            maxConcurrentRequests: 1024
